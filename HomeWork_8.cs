@@ -6,8 +6,6 @@ namespace HomeWork_8
     {
         static void Main(string[] args)
         {
-            int countOfRepeat = 10;
-
             Console.WriteLine("Для выхода из программы наберите exit");
 
             while (true)
