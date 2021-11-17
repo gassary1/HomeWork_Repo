@@ -10,9 +10,9 @@ namespace HomeWork_3
             int columns = 3;
 
             int fullRows = countOfPictures / columns;
-            int remainOfPhoto = countOfPictures % columns;
+            int remainOfPictures = countOfPictures % columns;
 
-            Console.WriteLine($"Всего заполненных рядов - {fullRows}\nОстаток фотографии - {remainOfPhoto}");
+            Console.WriteLine($"Всего заполненных рядов - {fullRows}\nОстаток фотографии - {remainOfPictures}");
             Console.ReadLine();
         }
     }
