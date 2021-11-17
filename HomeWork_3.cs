@@ -1,16 +1,16 @@
-﻿using System;
+using System;
 
 namespace HomeWork_3
 {
-    class HomeWork_2
+    class HomeWork_3
     {
         static void Main(string[] args)
         {
-            int countOfPhoto = 52;
-            int cols = 3;
+            int countOfPictures = 52;
+            int columns = 3;
 
-            int fullRow = countOfPhoto / cols;
-            int remainOfPhoto = countOfPhoto % cols;
+            int fullRow = countOfPictures / columns;
+            int remainOfPhoto = countOfPictures % columns;
 
             Console.WriteLine($"Всего заполненных рядов - {fullRow}\nОстаток фотографии - {remainOfPhoto}");
             Console.ReadLine();
