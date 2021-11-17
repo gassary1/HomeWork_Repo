@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace HomeWork_8
 {
@@ -6,15 +6,17 @@ namespace HomeWork_8
     {
         static void Main(string[] args)
         {
+            bool isActive = true;
+
             Console.WriteLine("Для выхода из программы наберите exit");
 
-            while (true)
+            while (isActive)
             {
                 Console.Write("Введите любое сообщение: ");
                 string message = Console.ReadLine();
                 Console.WriteLine(message);
 
-                if (message == "exit") break;
+                if (message == "exit") isActive = false;
             }
 
         }
