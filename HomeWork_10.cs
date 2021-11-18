@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace HomeWork_10
 {
@@ -6,80 +6,99 @@ namespace HomeWork_10
     {
         static void Main(string[] args)
         {
-            #region Переменные/Исходные данные
+            #region Variables / Raw Data
 
             bool isActive = true;
+            bool succes;
             string name = string.Empty;
             string surname = string.Empty;
-            int age = 0;
+            string stringAge = string.Empty;
+            string stringIncome = string.Empty;
+            string stringConsumption = string.Empty;
             int income = 0;
             int consumption = 0;
             int profit = 0;
+            int age = 0;
 
             #endregion
 
-            #region Меню управления программой
+            #region Program control menu
 
             while (isActive)
             {
                 Console.WriteLine("Меню управления финансами:\n1 - Ввод имени\n2 - Ввод фамилии" +
                     "\n3 - Ввод возраста\n4 - Ввод дохода\n5 - Ввод расходов\n6 - Расчет прибыли" +
                     "\n7 - Печать информации\n8 - Выход");
+
                 Console.Write("Выберите нужную функцию: ");
 
                 ConsoleKeyInfo answerKey = Console.ReadKey();
 
+                Console.Clear();
+
                 switch (answerKey.Key)
                 {
+
                     case ConsoleKey.D1:
-                        Console.Clear();
                         Console.Write("Введите свое имя: ");
                         name = Console.ReadLine();
                         break;
 
                     case ConsoleKey.D2:
-                        Console.Clear();
                         Console.Write("Введите свою фамилию: ");
                         surname = Console.ReadLine();
                         break;
 
                     case ConsoleKey.D3:
-                        Console.Clear();
                         Console.Write("Введите свой возраст: ");
-                        try { age = Convert.ToInt32(Console.ReadLine()); }
-                        catch { Console.WriteLine("Введено некорректное значение"); }
+                        stringAge = Console.ReadLine();
+                        succes = int.TryParse(stringAge, out age);
+                        if (!succes)
+                        {
+                            Console.WriteLine("Ошибка ввода данных");
+                        } 
                         break;
 
                     case ConsoleKey.D4:
-                        Console.Clear();
                         Console.Write("Введите свой доход: ");
-                        try { income = Convert.ToInt32(Console.ReadLine()); }
-                        catch { Console.WriteLine("Введено некорректное значение"); }
+                        stringIncome = Console.ReadLine();
+                        succes = int.TryParse(stringIncome, out income);
+                        if (!succes)
+                        {
+                            Console.WriteLine("Ошибка ввода данных");
+                        }
                         break;
 
                     case ConsoleKey.D5:
-                        Console.Clear();
                         Console.Write("Введите свои затраты: ");
-                        try { consumption = Convert.ToInt32(Console.ReadLine()); }
-                        catch { Console.WriteLine("Введено некорректное значение"); }
+                        stringConsumption = Console.ReadLine();
+                        succes = int.TryParse(stringConsumption, out consumption);
+                        if (!succes)
+                        {
+                            Console.WriteLine("Ошибка ввода данных");
+                        }
                         break;
 
                     case ConsoleKey.D6:
-                        Console.Clear();
                         profit = income - consumption;
                         Console.WriteLine($"Вваш доход составляет - {profit}");
-                        if (profit == 0) Console.WriteLine("Недостаточно данных для расчета или прибыль равна 0");
+                        if (profit == 0)
+                        {
+                            Console.WriteLine("Недостаточно данных для расчета или прибыль равна 0");
+                        }
+                        else if (profit < 0)
+                        {
+                            Console.WriteLine("Дохода нет...одни убытки");
+                        }
                         break;
 
                     case ConsoleKey.D7:
-                        Console.Clear();
                         Console.WriteLine($"Ваше имя - {name}\nВаша фамилия - {surname}\nВаш возраст - {age}" +
                             $"\nДоход составляет - {income}\nРасход составляет - {consumption}" +
                             $"\nВаща прибыль - {profit}");
                         break;
 
                     case ConsoleKey.D8:
-                        Console.Clear();
                         Console.WriteLine("До новых встреч!");
                         isActive = false;
                         break;
@@ -88,9 +107,7 @@ namespace HomeWork_10
                         Console.WriteLine("Нет такой команды");
                         break;
                 }
-
             }
-
             #endregion
         }
     }
