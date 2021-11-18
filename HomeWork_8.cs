@@ -16,9 +16,11 @@ namespace HomeWork_8
                 string message = Console.ReadLine();
                 Console.WriteLine(message);
 
-                if (message == "exit") isActive = false;
+                if (message == "exit")
+                {
+                    isActive = false;
+                }
             }
-
         }
     }
 }
