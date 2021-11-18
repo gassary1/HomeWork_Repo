@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace HomeWork_12
+namespace HomeWork_13
 {
-    class HomeWork_12
+    class HomeWork_13
     {
         static void Main(string[] args)
         {
