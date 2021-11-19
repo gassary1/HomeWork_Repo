@@ -9,7 +9,7 @@ namespace HomeWork_11
             int result = 0;
             int startResult;
             int maxResult = 98;
-            int factor=1;
+            int factor = 1;
 
             for (startResult = 7; result < maxResult; factor++)
             {
