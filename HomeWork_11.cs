@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace HomeWork_11
 {
@@ -6,11 +6,14 @@ namespace HomeWork_11
     {
         static void Main(string[] args)
         {
-            int result;
+            int result = 0;
+            int startResult;
+            int maxResult = 98;
+            int factor=1;
 
-            for (int i = 1; i < 15; i++)
+            for (startResult = 7; result < maxResult; factor++)
             {
-                result = 7 * i;
+                result = startResult * factor;
                 Console.WriteLine(result);
             }
         }
