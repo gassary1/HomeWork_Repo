@@ -9,9 +9,10 @@ namespace HomeWork_9
             float rub;
             float usd;
             float jpy;
-            float rubToUsd = 70.98f;
-            float usdToRub = 68.74f;
-            float jpyToRub = 0.65f;
+            float usdToRub = 0.013f;
+            float rubToUsd = 74.99f;
+            float rubToJpy = 0.65f;
+            float jpyToRub = 1.53f;
             float currencyCount;
             string stringCurrencyCount;
             bool succes = true;
@@ -29,8 +30,12 @@ namespace HomeWork_9
 
             while (isActive)
             {
-                Console.WriteLine("Меню управления валютами:\n1 - Конвертировать рубли в доллары\n2 - Конвертировать доллары в рубли" +
-                    "\n3 - Конвертировать йены в рубли\n4 - Выход");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"Баланс {rub} - рублей, {usd} - долларов, {jpy} - иен");
+                Console.ResetColor();
+
+                Console.WriteLine("\nМеню управления валютами:\n1 - Конвертировать рубли в доллары\n2 - Конвертировать доллары в рубли" +
+                    "\n3 - Конвертировать рубли в иены\n4 - Конвертировать иены в рубли\n5 - Выход");
                 Console.Write("Выберите нужную функцию: ");
                 answerKey = Console.ReadKey();
 
@@ -42,12 +47,12 @@ namespace HomeWork_9
                         Console.Write("Сколько рублей конвертировать: ");
                         stringCurrencyCount = Console.ReadLine();
 
-                        if (succes!=float.TryParse(stringCurrencyCount, out currencyCount)) 
+                        if (succes != float.TryParse(stringCurrencyCount, out currencyCount))
                         {
                             Console.WriteLine("Ошибка ввода");
                         }
 
-                        if (currencyCount>rub)
+                        if (currencyCount > rub)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Недостаточно средств!");
@@ -57,7 +62,6 @@ namespace HomeWork_9
                         {
                             rub -= currencyCount;
                             usd += currencyCount / rubToUsd;
-                            Console.WriteLine($"Баланс {rub} - рублей, {usd} - долларов, {jpy} - йен");
                         }
                         break;
 
@@ -65,12 +69,12 @@ namespace HomeWork_9
                         Console.Write("Сколько долларов конвертировать: ");
                         stringCurrencyCount = Console.ReadLine();
 
-                        if (succes!=float.TryParse(stringCurrencyCount, out currencyCount))
+                        if (succes != float.TryParse(stringCurrencyCount, out currencyCount))
                         {
                             Console.WriteLine("Ошибка ввода");
                         }
 
-                        if (currencyCount>usd)
+                        if (currencyCount > usd)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Недостаточно средств на счете!");
@@ -78,22 +82,21 @@ namespace HomeWork_9
                         }
                         else
                         {
-                            rub += currencyCount * usdToRub;
+                            rub += currencyCount / usdToRub;
                             usd -= currencyCount;
-                            Console.WriteLine($"Баланс {rub} - рублей, {usd} - долларов, {jpy} - йен");
                         }
                         break;
 
                     case ConsoleKey.D3:
-                        Console.Write("Сколько йен конвертировать: ");
+                        Console.Write("Сколько рублей конвертировать: ");
                         stringCurrencyCount = Console.ReadLine();
 
-                        if (succes!=float.TryParse(stringCurrencyCount, out currencyCount))
+                        if (succes != float.TryParse(stringCurrencyCount, out currencyCount))
                         {
                             Console.WriteLine("Ошибка ввода");
                         }
 
-                        if (currencyCount>jpy)
+                        if (currencyCount > rub)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Недостаточно средств на счете!");
@@ -101,13 +104,34 @@ namespace HomeWork_9
                         }
                         else
                         {
-                            rub += currencyCount * jpyToRub;
-                            jpy -= currencyCount;
-                            Console.WriteLine($"Баланс {rub} - рублей, {usd} - долларов, {jpy} - йен");
+                            rub -= currencyCount;
+                            jpy += currencyCount / rubToJpy;
                         }
                         break;
 
                     case ConsoleKey.D4:
+                        Console.Write("Сколько иен конвертировать: ");
+                        stringCurrencyCount = Console.ReadLine();
+
+                        if (succes != float.TryParse(stringCurrencyCount, out currencyCount))
+                        {
+                            Console.WriteLine("Ошибка ввода");
+                        }
+
+                        if (currencyCount > jpy)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Недостаточно средств на счете!");
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            jpy -= currencyCount;
+                            rub += currencyCount / jpyToRub;
+                        }
+                        break;
+
+                    case ConsoleKey.D5:
                         Console.WriteLine("До новых встреч!");
                         isActive = false;
                         break;
