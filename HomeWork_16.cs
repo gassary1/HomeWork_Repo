@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace HomeWork_16
 {
@@ -19,6 +19,15 @@ namespace HomeWork_16
 
             Console.WriteLine("\n\nЛокальные максимумы данного массива:\n");
 
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            if (matrix[0] > matrix[1])
+            {
+                Console.Write($"{matrix[0],5}");
+            }
+
+            Console.ResetColor();
+
             for (int i = 1; i < matrix.Length-1; i++)
             {
                 if (matrix[i] > matrix[i - 1] && matrix[i] > matrix[i + 1])
@@ -26,6 +35,15 @@ namespace HomeWork_16
                     Console.Write($"{matrix[i],5}");
                 }
             }
+
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            if (matrix[matrix.Length - 1] > matrix[matrix.Length - 2])
+            {
+                Console.Write($"{matrix[matrix.Length-1], 5}");
+            }
+
+            Console.ResetColor();
         }
     }
 }
