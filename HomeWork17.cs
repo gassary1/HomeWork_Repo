@@ -52,8 +52,6 @@ namespace HomeWork17
             }
 
             Console.WriteLine($"\nСумма равна {sum}");
-
         }
-
     }
 }
