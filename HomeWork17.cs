@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace HomeWork17
 {
@@ -6,25 +6,19 @@ namespace HomeWork17
     {
         static void Main(string[] args)
         {
-            int[] userArray = new int[1];
+            int[] userArray = new int[0];
             int sum = 0;
             int userInput;
             string stringUserInput;
             bool isActive = true;
 
-            for (int i = 0; i < userArray.Length; i++)
-            {
-                userArray[i] = Convert.ToInt32(Console.ReadLine());
-            }
+            Console.WriteLine("Вводите числа через Enter." +
+                "\nДля подсчета суммы введите sum." +
+                "\nДля выхода из программы и вывода полученного массива нажмите exit");
 
             while (isActive)
             {
                 int[] tempArray = new int[userArray.Length + 1];
-
-                for (int i = 0; i < userArray.Length; i++) 
-                {
-                    tempArray[i] = userArray[i];
-                }
 
                 stringUserInput = Console.ReadLine();
 
@@ -33,14 +27,24 @@ namespace HomeWork17
                     for (int i = 0; i < userArray.Length; i++)
                     {
                         sum += userArray[i];
-                        isActive = false;
                     }
+                    Console.WriteLine($"\nСумма равна {sum}");
+                    sum = 0;
                 }
 
                 else if (int.TryParse(stringUserInput, out userInput))
                 {
                     tempArray[userArray.Length] = userInput;
+                    for (int i = 0; i < userArray.Length; i++)
+                    {
+                        tempArray[i] = userArray[i];
+                    }
                     userArray = tempArray;
+                }
+
+                else if (stringUserInput=="exit")
+                {
+                    isActive = false;
                 }
 
                 else Console.WriteLine("Ошибка ввода данных");
@@ -50,8 +54,6 @@ namespace HomeWork17
             {
                 Console.Write($"{item,5}");
             }
-
-            Console.WriteLine($"\nСумма равна {sum}");
         }
     }
 }
