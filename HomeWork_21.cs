@@ -6,10 +6,11 @@ namespace HomeWork_21
     {
         static void Main(string[] args)
         {
-            int a = ToRequestNumber();
+            int number = GetNumber();
+            Console.WriteLine($"Полученное число - {number}");
         }
 
-        static int ToRequestNumber()
+        static int GetNumber()
         {
             bool isActive = true;
             int result = 0;
@@ -22,7 +23,6 @@ namespace HomeWork_21
                 {
                     isActive = false;
                 }
-
                 else
                 {
                     Console.WriteLine("Ошибка ввода");
