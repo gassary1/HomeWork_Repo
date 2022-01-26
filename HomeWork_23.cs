@@ -6,6 +6,7 @@ namespace HomeWork_23
     {
         static void Main(string[] args)
         {
+            Random random = new Random();
             int[] numbers = new int[random.Next(4, 6)];
 
             Console.WriteLine("Исходный массив:");
