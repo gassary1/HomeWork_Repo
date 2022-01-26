@@ -11,7 +11,8 @@ namespace HomeWork_20
 
             static void DrawBar(uint percent, uint maxValue, ConsoleColor color, int position, char symbol)
             {
-                double value = ((double)percent / 100) * maxValue;
+                int constant = 100;
+                double value = ((double)percent / constant) * maxValue;
 
                 Console.SetCursorPosition(0, position);
                 Console.Write("[");
