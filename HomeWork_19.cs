@@ -1,4 +1,3 @@
-
 using System;
 
 namespace HomeWork_19
@@ -20,7 +19,7 @@ namespace HomeWork_19
 
             string[] fullNames = new string[countNotes];
             string[] positions = new string[fullNames.Length];
-            FillDB(fullNames, positions);
+            FillDossier(fullNames, positions);
 
             Console.Clear();
 
@@ -33,7 +32,7 @@ namespace HomeWork_19
                 switch (userOption)
                 {
                     case ConsoleKey.D1:
-                        PrintDB(fullNames, positions);
+                        PrintDossier(fullNames, positions);
                         break;
 
                     case ConsoleKey.D2:
@@ -67,7 +66,7 @@ namespace HomeWork_19
             }
         }
 
-        static void PrintDB(string[] names, string[] positions)
+        static void PrintDossier(string[] names, string[] positions)
         {
             Console.WriteLine($"{"Позиция",2} {"ФИО",10} {"Должность",20}");
 
@@ -77,7 +76,7 @@ namespace HomeWork_19
             }
         }
 
-        static void FillDB(string[] fullNames, string[] positions)
+        static void FillDossier(string[] fullNames, string[] positions)
         {
             Random random = new Random();
 
