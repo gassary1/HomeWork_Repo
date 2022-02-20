@@ -7,18 +7,15 @@ namespace HomeWork17
     {
         static void Main(string[] args)
         {
-            string fullName;
-            string position;
             int countNotes;
-            int noteIndex;
             bool isActive = true;
             ConsoleKey userOption;
 
-            List<KeyValuePair<string, string>> dossier = new List<KeyValuePair<string, string>>();
+            List<KeyValuePair<string, string>> dossiers = new List<KeyValuePair<string, string>>();
 
-            Console.WriteLine("Введите количество записей в досье (если значение будет больше 0, то произойдет автоматическое заполнение ячеек): ");
+            Console.WriteLine("Введите количество записей досье (если значение будет больше 0, то произойдет автоматическое заполнение ячеек): ");
             countNotes = GetNumber();
-            FillDossier(dossier, countNotes);
+            FillDossiers(dossiers, countNotes);
 
             Console.Clear();
 
@@ -31,22 +28,15 @@ namespace HomeWork17
                 switch (userOption)
                 {
                     case ConsoleKey.D1:
-                        Console.Write("Введите ФИО: ");
-                        fullName = Console.ReadLine();
-                        Console.Write("\nВведите должность: ");
-                        position = Console.ReadLine();
-                        AddDossier(dossier, fullName, position);
+                        AddDossier(dossiers);
                         break;
 
                     case ConsoleKey.D2:
-                        Console.WriteLine("Печать досье");
-                        PrintDossier(dossier);
+                        PrintDossiers(dossiers);
                         break;
 
                     case ConsoleKey.D3:
-                        Console.Write("Введите номер записи: ");
-                        noteIndex = GetNumber();
-                        DeleteDossier(ref dossier, noteIndex);
+                        DeleteDossier(ref dossiers);
                         break;
 
                     case ConsoleKey.D4:
@@ -61,7 +51,7 @@ namespace HomeWork17
 
         }
 
-        static KeyValuePair<string,string> CreateData()
+        static KeyValuePair<string, string> CreateData()
         {
             string fullNames;
             string positions;
@@ -109,7 +99,7 @@ namespace HomeWork17
             return sourceData;
         }
 
-        static void FillDossier(List<KeyValuePair<string,string>> list, int count)
+        static void FillDossiers(List<KeyValuePair<string, string>> list, int count)
         {
             for (int i = 0; i < count; i++)
             {
@@ -117,9 +107,11 @@ namespace HomeWork17
             }
         }
 
-        static void PrintDossier(List<KeyValuePair<string,string>> list)
+        static void PrintDossiers(List<KeyValuePair<string, string>> list)
         {
             int currentPosition = 1;
+
+            Console.WriteLine("Печать досье сотрудников");
 
             foreach (KeyValuePair<string, string> item in list)
             {
@@ -127,8 +119,10 @@ namespace HomeWork17
             }
         }
 
-        static bool DeleteDossier(ref List<KeyValuePair<string,string>> list, int noteIndex)
+        static bool DeleteDossier(ref List<KeyValuePair<string, string>> list)
         {
+            Console.Write("Введите номер записи: ");
+            int noteIndex = GetNumber();
             int currentPosition = noteIndex - 1;
 
             if (noteIndex > 0 && noteIndex <= list.Count)
@@ -142,16 +136,22 @@ namespace HomeWork17
             }
         }
 
-        static void AddDossier(List<KeyValuePair<string, string>> list, string fullName, string position)
+        static void AddDossier(List<KeyValuePair<string, string>> list)
         {
             KeyValuePair<string, string> newDossier;
+
+            Console.Write("Введите ФИО: ");
+            string fullName = Console.ReadLine();
+            Console.Write("\nВведите должность: ");
+            string position = Console.ReadLine();
+
             newDossier = new KeyValuePair<string, string>(position, fullName);
             list.Add(newDossier);
         }
 
         static void PrintMenu()
         {
-            Console.WriteLine("1 - Добавить досье\n2 - Печать досье\n3 - Удалить досье\n4 - Выход");
+            Console.WriteLine("1 - Добавить досье\n2 - Печать досье сотрудников\n3 - Удалить досье\n4 - Выход");
         }
 
         static int GetNumber()
