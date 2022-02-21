@@ -30,23 +30,14 @@ namespace HomeWork_28
 
     class Player
     {
-        #region Fields
         private string _name;
-
         private string _race;
-
         private uint _level;
-        #endregion
 
-        #region Properties
         public string Name => _name;
-
         public string Race => _race;
-
         public uint Level => _level;
-        #endregion
 
-        #region Constructors
         public Player(string name, string race, uint level)
         {
             _name = name;
@@ -55,17 +46,15 @@ namespace HomeWork_28
         }
 
         public Player() : this("", "", 0) { }
-        #endregion
 
-        #region Metods
-        public string ChangeRace(string newRace)
+        public void ChangeRace(string newRace)
         {
-            return _race = newRace;
+            _race = newRace;
         }
 
-        public string ChangeName(string newName)
+        public void ChangeName(string newName)
         {
-            return _name = newName;
+            _name = newName;
         }
 
         public void AddLevel()
@@ -77,6 +66,5 @@ namespace HomeWork_28
         {
             Console.WriteLine($"{Name,15} {Race,15} {Level,5}");
         }
-        #endregion
     }
 }
