@@ -7,9 +7,6 @@ namespace HomeWork_30
     {
         static void Main(string[] args)
         {
-            string name;
-            string nickname;
-            int playerPosition;
             int countNotes;
             bool isActive = true;
             ConsoleKey useroption;
@@ -30,23 +27,15 @@ namespace HomeWork_30
                 switch (useroption)
                 {
                     case ConsoleKey.D1:
-                        Console.Write("Введите имя: ");
-                        name = Console.ReadLine();
-                        Console.Write("Введите ник игрока: ");
-                        nickname = Console.ReadLine();
-                        repository.AddPlayer(name, nickname);
+                        repository.AddPlayer();
                         break;
 
                     case ConsoleKey.D2:
-                        Console.Write("Введите номер позиции игрока: ");
-                        playerPosition = GetPosition();
-                        repository[playerPosition].Ban();
+                        repository.BanPlayer();
                         break;
 
                     case ConsoleKey.D3:
-                        Console.Write("Введите номер позиции игрока: ");
-                        playerPosition = GetPosition();
-                        repository.DeletePlayer(playerPosition);
+                        repository.DeletePlayer();
                         break;
 
                     case ConsoleKey.D4:
@@ -63,7 +52,7 @@ namespace HomeWork_30
         static void PrintMenu()
         {
             Console.WriteLine();
-            Console.WriteLine("1 - Добавить игрока\n2 - Забанить игрока по номеру\n3 - удалить игрока\n4 - Выход");
+            Console.WriteLine("1 - Добавить игрока\n2 - Забанить игрока по номеру\n3 - Удалить игрока\n4 - Выход");
         }
 
         static int GetNumber()
@@ -86,48 +75,39 @@ namespace HomeWork_30
             }
             return result;
         }
-
-        static int GetPosition()
-        {
-            int playerPosition = GetNumber();
-            int currentPosition = playerPosition - 1;
-            return currentPosition;
-        }
     }
 
     class Player
     {
         private string _name;
         private string _nickname;
-        private bool _flag;
-        static Random random;
-        static List<string> dbNicknames;
+        private bool _banStatus;
+        private static List<string> _nicknames;
 
         public string Name => _name;
         public string Nickname => _nickname;
-        public bool Flag => _flag;
+        public bool BanStatus => _banStatus;
 
-        static Player()
-        {
-            random = new Random();
-            dbNicknames = new List<string>();
-        }
-
-        public Player(string name, string nickname, bool flag)
+        public Player(string name, string nickname, bool banStatus)
         {
             _name = name;
             _nickname = nickname;
-            _flag = flag;
+            _banStatus = banStatus;
 
-            if (_nickname == string.Empty || Player.dbNicknames.Contains(_nickname))
+            if (_nickname == string.Empty || Player._nicknames.Contains(_nickname))
             {
                 _nickname = $"{Guid.NewGuid().ToString().Substring(0, 5)}";
             }
 
-            Player.dbNicknames.Add(_nickname);
+            Player._nicknames.Add(_nickname);
         }
 
         public Player() : this("", "", false) { }
+
+        static Player()
+        {
+            _nicknames = new List<string>();
+        }
 
         public void ChangeName(string newName)
         {
@@ -141,32 +121,45 @@ namespace HomeWork_30
 
         public void Ban()
         {
-            _flag = true;
+            _banStatus = true;
         }
 
         public void Unban()
         {
-            _flag = false;
+            _banStatus = false;
         }
 
         public void PrintInfo()
         {
-            Console.WriteLine($"{Name,10} {Nickname,10} {Flag,10}");
+            Console.WriteLine($"{Name,10} {Nickname,10} {BanStatus,10}");
         }
     }
 
     class Repository
     {
         private List<Player> _players;
-        static Random random;
-        static readonly string[] names;
-        private readonly bool randomFlag;
+        private static Random _random;
+        private readonly bool _randomBanStatus;
+        private static readonly string[] _names;
+
+        public Repository(int count)
+        {
+            CreatePlayers();
+
+            for (int i = 0; i < count; i++)
+            {
+                _players.Add(new Player(_names[_random.Next(_names.Length)], "", _randomBanStatus));
+                _randomBanStatus = _random.Next(2) == 1 ? true : false;
+            }
+        }
+
+        private Player this[int index] => _players[index];
 
         static Repository()
         {
-            random = new Random();
+            _random = new Random();
 
-            names = new string[]
+            _names = new string[]
             {
                 "Вадим",
                 "Алексей",
@@ -180,43 +173,72 @@ namespace HomeWork_30
             };
         }
 
-        public Repository(int count)
-        {
-            CreatePlayers();
-
-            for (int i = 0; i < count; i++)
-            {
-                _players.Add(new Player(names[random.Next(names.Length)], "", randomFlag));
-                randomFlag = random.Next(2) == 1 ? true : false;
-            }
-        }
-
-        public Player this[int index]
-        {
-            get { return _players[index]; }
-            set { _players[index] = value; }
-        }
-
         public void CreatePlayers()
         {
             _players = new List<Player>();
         }
 
-        public void AddPlayer(string name, string nickname)
+        public void AddPlayer()
         {
+            Console.Write("Введите имя: ");
+            string name = Console.ReadLine();
+            Console.Write("Введите ник игрока: ");
+            string nickname = Console.ReadLine();
+
             _players.Add(new Player(name, nickname, false));
         }
 
-        public void DeletePlayer(int position)
+        public void BanPlayer()
         {
-            if (position > 0)
+            Console.Write("Введите номер позиции игрока: ");
+            int currentPostion = GetNumber();
+            int playerPosition = currentPostion - 1;
+
+            if (currentPostion > 0 && currentPostion <= _players.Count) 
             {
-                _players.Remove(_players[position]);
+                _players[playerPosition].Ban();
             }
             else
             {
                 Console.WriteLine("Неверный индекс игрока");
             }
+        }
+
+        public void DeletePlayer()
+        {
+            Console.Write("Введите номер позиции игрока: ");
+            int currentPostion = GetNumber();
+            int playerPosition = currentPostion - 1;
+
+            if (currentPostion > 0 && currentPostion <= _players.Count)
+            {
+                _players.Remove(_players[playerPosition]);
+            }
+            else
+            {
+                Console.WriteLine("Неверный индекс игрока");
+            }
+        }
+
+        private int GetNumber()
+        {
+            bool isActive = true;
+            int result = 0;
+
+            while (isActive)
+            {
+                string userInput = Console.ReadLine();
+
+                if (int.TryParse(userInput, out result))
+                {
+                    isActive = false;
+                }
+                else
+                {
+                    Console.WriteLine("Ошибка ввода");
+                }
+            }
+            return result;
         }
 
         public void PrintRepository()
