@@ -31,7 +31,7 @@ namespace HomeWork_30
                         break;
 
                     case ConsoleKey.D2:
-                        repository.BanPlayer();
+                        repository.ChangePlayerStatus();
                         break;
 
                     case ConsoleKey.D3:
@@ -52,7 +52,7 @@ namespace HomeWork_30
         static void PrintMenu()
         {
             Console.WriteLine();
-            Console.WriteLine("1 - Добавить игрока\n2 - Забанить игрока по номеру\n3 - Удалить игрока\n4 - Выход");
+            Console.WriteLine("1 - Добавить игрока\n2 - Изменить статус игрока\n3 - Удалить игрока\n4 - Выход");
         }
 
         static int GetNumber()
@@ -188,15 +188,19 @@ namespace HomeWork_30
             _players.Add(new Player(name, nickname, false));
         }
 
-        public void BanPlayer()
+        public void ChangePlayerStatus()
         {
             Console.Write("Введите номер позиции игрока: ");
             int currentPostion = GetNumber();
             int playerPosition = currentPostion - 1;
 
-            if (currentPostion > 0 && currentPostion <= _players.Count) 
+            if (currentPostion > 0 && currentPostion <= _players.Count && _players[playerPosition].BanStatus == false) 
             {
                 _players[playerPosition].Ban();
+            }
+            else if (currentPostion > 0 && currentPostion <= _players.Count && _players[playerPosition].BanStatus == true)
+            {
+                _players[playerPosition].Unban();
             }
             else
             {
