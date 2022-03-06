@@ -79,14 +79,19 @@ namespace HomeWork_30
 
     class Player
     {
+        private static List<string> _nicknames;
         private string _name;
         private string _nickname;
         private bool _banStatus;
-        private static List<string> _nicknames;
 
         public string Name => _name;
         public string Nickname => _nickname;
         public bool BanStatus => _banStatus;
+
+        static Player()
+        {
+            _nicknames = new List<string>();
+        }
 
         public Player(string name, string nickname, bool banStatus)
         {
@@ -103,11 +108,6 @@ namespace HomeWork_30
         }
 
         public Player() : this("", "", false) { }
-
-        static Player()
-        {
-            _nicknames = new List<string>();
-        }
 
         public void ChangeName(string newName)
         {
@@ -137,23 +137,10 @@ namespace HomeWork_30
 
     class Repository
     {
-        private List<Player> _players;
         private static Random _random;
-        private readonly bool _randomBanStatus;
         private static readonly string[] _names;
-
-        public Repository(int count)
-        {
-            CreatePlayers();
-
-            for (int i = 0; i < count; i++)
-            {
-                _players.Add(new Player(_names[_random.Next(_names.Length)], "", _randomBanStatus));
-                _randomBanStatus = _random.Next(2) == 1 ? true : false;
-            }
-        }
-
-        private Player this[int index] => _players[index];
+        private readonly bool _randomBanStatus;
+        private List<Player> _players;
 
         static Repository()
         {
@@ -173,6 +160,19 @@ namespace HomeWork_30
             };
         }
 
+        public Repository(int count)
+        {
+            CreatePlayers();
+
+            for (int i = 0; i < count; i++)
+            {
+                _players.Add(new Player(_names[_random.Next(_names.Length)], "", _randomBanStatus));
+                _randomBanStatus = _random.Next(2) == 1 ? true : false;
+            }
+        }
+
+        private Player this[int index] => _players[index];
+
         public void CreatePlayers()
         {
             _players = new List<Player>();
@@ -191,16 +191,18 @@ namespace HomeWork_30
         public void ChangePlayerStatus()
         {
             Console.Write("Введите номер позиции игрока: ");
-            int currentPostion = GetNumber();
-            int playerPosition = currentPostion - 1;
+            int currentPosition = GetNumber();
 
-            if (currentPostion > 0 && currentPostion <= _players.Count && _players[playerPosition].BanStatus == false) 
+            if (currentPosition > 0 && currentPosition <= _players.Count && TryGetPlayer(currentPosition, out Player player) )
             {
-                _players[playerPosition].Ban();
-            }
-            else if (currentPostion > 0 && currentPostion <= _players.Count && _players[playerPosition].BanStatus == true)
-            {
-                _players[playerPosition].Unban();
+                if (player.BanStatus == true)
+                {
+                    player.Unban();
+                }
+                else
+                {
+                    player.Ban();
+                }
             }
             else
             {
@@ -211,16 +213,28 @@ namespace HomeWork_30
         public void DeletePlayer()
         {
             Console.Write("Введите номер позиции игрока: ");
-            int currentPostion = GetNumber();
-            int playerPosition = currentPostion - 1;
+            int currentPosition = GetNumber();
 
-            if (currentPostion > 0 && currentPostion <= _players.Count)
+            if (currentPosition > 0 && currentPosition <= _players.Count && TryGetPlayer(currentPosition, out Player player))
             {
-                _players.Remove(_players[playerPosition]);
+                _players.Remove(player);
             }
             else
             {
                 Console.WriteLine("Неверный индекс игрока");
+            }
+        }
+
+        public void PrintRepository()
+        {
+            int playerPosition = 1;
+
+            Console.WriteLine($"{"Имя",10} {"Ник",10} {"Статус бана",12}");
+
+            foreach (var player in _players)
+            {
+                Console.Write(playerPosition++);
+                player.PrintInfo();
             }
         }
 
@@ -245,17 +259,18 @@ namespace HomeWork_30
             return result;
         }
 
-        public void PrintRepository()
+        private bool TryGetPlayer (int currentPosition, out Player player)
         {
-            int playerPosition = 1;
+            int playerPosition = currentPosition - 1;
+            player = null;
 
-            Console.WriteLine($"{"Имя",10} {"Ник",10} {"Статус бана",12}");
-
-            foreach (var player in _players)
+            if (_players[playerPosition] == null)
             {
-                Console.Write(playerPosition++);
-                player.PrintInfo();
+                return false;
             }
+
+            player = _players[playerPosition];
+            return true;
         }
     }
 }
