@@ -6,11 +6,14 @@ namespace ConsoleApp2
     {
         static void Main(string[] args)
         {
-            Player firstPlayer = new Player(3, 10);
-            firstPlayer.DrawPlayer('@');
+            Player firstPlayer = new Player(3, 10, '@');
+            Player secondPlayer = new Player(6, 5, '*');
 
-            Player secondPlayer = new Player(6, 5);
-            secondPlayer.DrawPlayer('*');
+            DrawHandler firstDrawHandler = new DrawHandler(firstPlayer);
+            DrawHandler secondDrawHandler = new DrawHandler(secondPlayer);
+
+            firstDrawHandler.DrawPlayer();
+            secondDrawHandler.DrawPlayer();
 
             Console.ReadLine();
         }
@@ -20,21 +23,33 @@ namespace ConsoleApp2
     {
         private int _xPosition;
         private int _yPosition;
+        private char _playerSymbol;
 
         public int XPosition => _xPosition;
         public int YPosition => _yPosition;
+        public char PlayerSymbol => _playerSymbol;
 
-        public Player(int xPosition, int yPosition)
+        public Player(int xPosition, int yPosition, char playerSymbol)
         {
             _xPosition = xPosition;
             _yPosition = yPosition;
+            _playerSymbol = playerSymbol;
+        }
+    }
+
+    class DrawHandler
+    {
+        private Player _player;
+
+        public DrawHandler(Player player)
+        {
+            _player = player;
         }
 
-        public void DrawPlayer(char playerSimbol)
+        public void DrawPlayer()
         {
-            Console.SetCursorPosition(XPosition, YPosition);
-
-            Console.WriteLine(playerSimbol);
+            Console.SetCursorPosition(_player.XPosition, _player.YPosition);
+            Console.Write(_player.PlayerSymbol);
         }
     }
 }
