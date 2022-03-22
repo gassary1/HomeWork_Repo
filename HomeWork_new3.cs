@@ -16,7 +16,7 @@ namespace ConsoleApp2
 
             for (int i = 100; i < endNumber; i++)
             {
-                for (multiply = 1; number * multiply < 1000; multiply++)
+                for (multiply = 1; number * multiply < endNumber; multiply++)
                 {
                     if (i==number*multiply)
                     {
