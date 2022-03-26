@@ -8,25 +8,26 @@ namespace ConsoleApp2
         {
             int firstNumber = 1;
             int secondNumber = 29;
-            int startPoint;
+            int startPoint = 100;
             int endPoint = 1000;
-            int multiply;
+            int multiply=1;
+            int countOfNumbers = 0;
             Random random = new Random();
             int number = random.Next(firstNumber, secondNumber);
 
             Console.WriteLine($"Сгенерированное число: {number}");
-            Console.WriteLine($"Числа, кратные {number}:");
 
-            for (startPoint = 100; startPoint < endPoint; startPoint++)
+            for (int i = number; i < endPoint; i = multiply * number)
             {
-                for (multiply = 1; number * multiply < endPoint; multiply++)
+                multiply++;
+
+                if (i >= startPoint)
                 {
-                    if (startPoint==number*multiply)
-                    {
-                        Console.WriteLine(startPoint);
-                    }
+                    countOfNumbers++;
                 }
             }
+
+            Console.WriteLine($"Количество чисел, кратные {number}: {countOfNumbers}");
         }
     }
 }
