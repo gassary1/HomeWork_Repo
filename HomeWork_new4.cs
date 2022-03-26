@@ -8,24 +8,24 @@ namespace ConsoleApp2
         {
             Random random = new Random();
             int number = random.Next(1, 100);
-            int basenum = 2;
-            int stepen;
-            int x;
+            int baseNumber = 2;
 
             Console.WriteLine($"Сгенерированное число: {number}");
-            Console.WriteLine($"Минимальная степень: {Pow(number)}");
-            Console.WriteLine($"Результат: {Math.Pow(basenum,Pow(number))}");
-
-
+            Console.WriteLine($"Минимальная степень: {FindMinimalDegree(number)}");
+            Console.WriteLine($"Результат: {Math.Pow(baseNumber, FindMinimalDegree(number))}");
         }
 
-        static int Pow(int number)
+        static int FindMinimalDegree(int number)
         {
             int result = 0;
-            for (int i = 1; number > Math.Pow(2, i); i++)
+            int degree = 0;
+            int baseNumber = 2;
+
+            for (int i = degree; number > Math.Pow(baseNumber, i); i++)
             {
                 result = i;
             }
+
             return result + 1;
         }
     }
