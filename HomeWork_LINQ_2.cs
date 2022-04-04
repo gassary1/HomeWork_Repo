@@ -17,10 +17,8 @@ namespace ConsoleApp2
             Repository repository = new Repository(10);
             Repository requestRepository;
 
-
             while (isActive)
             {
-
                 Console.WriteLine("1 - Cделать запрос\n2 - Выйти из программы");
                 userInput = Console.ReadLine();
 
@@ -51,6 +49,7 @@ namespace ConsoleApp2
                 }
             }
         }
+        
         static int GetNumber()
         {
             bool isActive = true;
