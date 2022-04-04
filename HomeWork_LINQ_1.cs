@@ -133,7 +133,7 @@ namespace ConsoleApp1
 
         public Repository ToAmnist()
         {
-            List<Criminal> tempCriminals = _criminals.Where(criminals => criminals.GetCrimeInfo() != "Антиправительственное").ToList();
+            List<Criminal> tempCriminals = _criminals.Where(criminal => criminal.GetCrimeInfo() != "Антиправительственное").ToList();
             return new Repository(tempCriminals);
         }
     }
