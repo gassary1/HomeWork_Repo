@@ -8,19 +8,18 @@ namespace ConsoleApp4
     {
         static void Main(string[] args)
         {
-            Repository repositoryTopThree;
             Repository repository = new Repository(15);
 
             Console.WriteLine("Список игроков: \n");
             repository.PrintRepository();
 
             Console.WriteLine("\nТоп 3 игрока по силе: \n");
-            repositoryTopThree = repository.RequestTopLevels();
-            repositoryTopThree.PrintRepository();
+            repository.RequestTopLevels();
+            repository.PrintRepository();
 
             Console.WriteLine("\nТоп 3 игрока по уровню: \n");
-            repositoryTopThree = repository.RequestTopStrengths();
-            repositoryTopThree.PrintRepository();
+            repository.RequestTopStrengths();
+            repository.PrintRepository();
         }
     }
 
@@ -98,18 +97,14 @@ namespace ConsoleApp4
             }
         }
 
-        public Repository RequestTopLevels()
+        public void RequestTopLevels()
         {
-            List<Player> tempPlayers = _players.OrderByDescending(player => player.Level).Take(3).ToList();
-
-            return new Repository(tempPlayers);
+            _players = _players.OrderByDescending(player => player.Level).Take(3).ToList();
         }
 
-        public Repository RequestTopStrengths()
+        public void RequestTopStrengths()
         {
-            List<Player> tempPlayers = _players.OrderByDescending(player => player.Strength).Take(3).ToList();
-
-            return new Repository(tempPlayers);
+            _players = _players.OrderByDescending(player => player.Strength).Take(3).ToList();
         }
     }
 }
