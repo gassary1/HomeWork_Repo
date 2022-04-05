@@ -15,11 +15,9 @@ namespace ConsoleApp4
 
             Console.WriteLine("\nТоп 3 игрока по силе: \n");
             repository.RequestTopLevels();
-            repository.PrintRepository();
 
             Console.WriteLine("\nТоп 3 игрока по уровню: \n");
             repository.RequestTopStrengths();
-            repository.PrintRepository();
         }
     }
 
@@ -99,12 +97,34 @@ namespace ConsoleApp4
 
         public void RequestTopLevels()
         {
-            _players = _players.OrderByDescending(player => player.Level).Take(3).ToList();
+            List<Player> tempPlayers = _players.OrderByDescending(player => player.Level).Take(3).ToList();
+
+            Header();
+
+            foreach (var player in tempPlayers)
+            {
+                player.ShowInfo();
+            }
         }
 
         public void RequestTopStrengths()
         {
-            _players = _players.OrderByDescending(player => player.Strength).Take(3).ToList();
+            List<Player> tempPlayers = _players.OrderByDescending(player => player.Strength).Take(3).ToList();
+
+            Header();
+
+            foreach (var player in tempPlayers)
+            {
+                player.ShowInfo();
+            }
+        }
+
+        private void Header()
+        {
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{"Имя",5} {"Сила",5} {"Уровень",5}");
+            Console.ResetColor();
         }
     }
 }
