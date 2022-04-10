@@ -4,37 +4,43 @@ using System.Linq;
 
 namespace ConsoleApp6
 {
-    //Существует класс солдата.В нём есть поля: имя, вооружение, звание, срок службы(в месяцах).
-    //Написать запрос, при помощи которого получить набор данных состоящий из имени и звания.
-    //Вывести все полученные данные в консоль.
-    //(Не менее 5 записей)
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Squad squad = new Squad(10);
+            squad.PrintSquad();
+            Console.WriteLine();
+            squad.RequestInfo();
         }
     }
 
     enum Rank
     {
         Soldier,
+        Corporal,
+        Sergent,
+        Ensign,
+        Lieutenant
     }
 
     class Warrior
     {
         private string _name;
         private string _lastName;
+        private uint _serviceTime;
         private Rank _rank;
 
         public string Name => _name;
         public string LastName => _lastName;
+        public uint ServiceTime => _serviceTime;
 
-        public Warrior(string name, string lastName, Rank rank)
+        public Warrior(string name, string lastName, Rank rank, uint serviceTime)
         {
             _name = name;
             _lastName = lastName;
             _rank = rank;
+            _serviceTime = serviceTime;
         }
 
         public string GetRank()
@@ -43,6 +49,14 @@ namespace ConsoleApp6
             {
                 case Rank.Soldier:
                     return "Рядовой";
+                case Rank.Corporal:
+                    return "Ефрейтор";
+                case Rank.Sergent:
+                    return "Сержант";
+                case Rank.Ensign:
+                    return "Прапорщик";
+                case Rank.Lieutenant:
+                    return "Лейтенант";
                 default:
                     return "-";
             }
@@ -50,7 +64,7 @@ namespace ConsoleApp6
 
         public void ShowInfo()
         {
-            Console.WriteLine();
+            Console.WriteLine($"{Name,10} {LastName,10} {GetRank(),10} {ServiceTime,10}");
         }
     }
 
@@ -67,12 +81,28 @@ namespace ConsoleApp6
 
             _names = new string[]
             {
-
+                "Иван",
+                "Алексей",
+                "Олег",
+                "Вадим",
+                "Сергей",
+                "Дмитрий",
+                "Денис",
+                "Александр",
+                "Игорь"
             };
 
             _lastNames = new string[]
             {
-
+                "Иванов",
+                "Ким",
+                "Пак",
+                "Стрельцов",
+                "Кругликов",
+                "Ермаков",
+                "Чеплыгин",
+                "Нельга",
+                "Андро"
             };
         }
 
@@ -83,18 +113,46 @@ namespace ConsoleApp6
             for (int i = 0; i < count; i++)
             {
                 _warriors.Add(new Warrior(_names[_random.Next(_names.Length)], _lastNames[_random.Next(_lastNames.Length)],
-                    (Rank)_random.Next(Enum.GetValues(typeof(Rank)).Length)));
+                    (Rank)_random.Next(Enum.GetValues(typeof(Rank)).Length), (uint)_random.Next(12, 48)));
             }
         }
 
         public void PrintSquad()
         {
-            Console.WriteLine();
+            Header();
 
             foreach (var warrior in _warriors)
             {
                 warrior.ShowInfo();
             }
+        }
+
+        public void RequestInfo()
+        {
+            var tempWarriors = _warriors.Select(warrior => new
+            {
+                Name = warrior.Name,
+                LastName = warrior.LastName,
+                Rank = warrior.GetRank()
+            }).ToList();
+
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{"Имя",10} {"Фамилия",10} {"Звание",10}");
+            Console.ResetColor();
+
+            foreach (var warrior in tempWarriors)
+            {
+                Console.WriteLine($"{warrior.Name,10} {warrior.LastName,10} {warrior.Rank,10}");
+            }
+        }
+
+        private void Header()
+        {
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{"Имя",10} {"Фамилия",10} {"Звание",10} {"Срок службы",15}");
+            Console.ResetColor();
         }
     }
 }
