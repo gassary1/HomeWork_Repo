@@ -15,56 +15,24 @@ namespace ConsoleApp6
         }
     }
 
-    enum Rank
-    {
-        Soldier,
-        Corporal,
-        Sergent,
-        Ensign,
-        Lieutenant
-    }
-
     class Warrior
     {
-        private string _name;
-        private string _lastName;
-        private uint _serviceTime;
-        private Rank _rank;
+        public string Name { get; }
+        public string LastName { get; }
+        public uint ServiceTime { get; }
+        public string Rank { get; }
 
-        public string Name => _name;
-        public string LastName => _lastName;
-        public uint ServiceTime => _serviceTime;
-
-        public Warrior(string name, string lastName, Rank rank, uint serviceTime)
+        public Warrior(string name, string lastName, string rank, uint serviceTime)
         {
-            _name = name;
-            _lastName = lastName;
-            _rank = rank;
-            _serviceTime = serviceTime;
-        }
-
-        public string GetRank()
-        {
-            switch (_rank)
-            {
-                case Rank.Soldier:
-                    return "Рядовой";
-                case Rank.Corporal:
-                    return "Ефрейтор";
-                case Rank.Sergent:
-                    return "Сержант";
-                case Rank.Ensign:
-                    return "Прапорщик";
-                case Rank.Lieutenant:
-                    return "Лейтенант";
-                default:
-                    return "-";
-            }
+            Name = name;
+            LastName = lastName;
+            Rank = rank;
+            ServiceTime = serviceTime;
         }
 
         public void ShowInfo()
         {
-            Console.WriteLine($"{Name,10} {LastName,10} {GetRank(),10} {ServiceTime,10}");
+            Console.WriteLine($"{Name,10} {LastName,10} {Rank,10} {ServiceTime,10}");
         }
     }
 
@@ -73,6 +41,7 @@ namespace ConsoleApp6
         private static Random _random;
         private static readonly string[] _names;
         private static readonly string[] _lastNames;
+        private static readonly string[] _ranks;
         private List<Warrior> _warriors;
 
         static Squad()
@@ -102,7 +71,19 @@ namespace ConsoleApp6
                 "Ермаков",
                 "Чеплыгин",
                 "Нельга",
-                "Андро"
+                "Андро",
+                "Борисов",
+                "Барецкий",
+                "Бочкарев"
+            };
+
+            _ranks = new string[]
+            {
+                "Рядовой",
+                "Ефрейтор",
+                "Сержант",
+                "Прапорщик",
+                "Лейтенант"
             };
         }
 
@@ -113,13 +94,13 @@ namespace ConsoleApp6
             for (int i = 0; i < count; i++)
             {
                 _warriors.Add(new Warrior(_names[_random.Next(_names.Length)], _lastNames[_random.Next(_lastNames.Length)],
-                    (Rank)_random.Next(Enum.GetValues(typeof(Rank)).Length), (uint)_random.Next(12, 48)));
+                    _ranks[_random.Next(_ranks.Length)], (uint)_random.Next(12, 48)));
             }
         }
 
         public void PrintSquad()
         {
-            Header();
+            ShowHeader();
 
             foreach (var warrior in _warriors)
             {
@@ -133,7 +114,7 @@ namespace ConsoleApp6
             {
                 Name = warrior.Name,
                 LastName = warrior.LastName,
-                Rank = warrior.GetRank()
+                Rank = warrior.Rank
             }).ToList();
 
             Console.BackgroundColor = ConsoleColor.Blue;
@@ -147,7 +128,7 @@ namespace ConsoleApp6
             }
         }
 
-        private void Header()
+        private void ShowHeader()
         {
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.Yellow;
