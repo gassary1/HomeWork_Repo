@@ -20,14 +20,14 @@ namespace ConsoleApp10
         {
             HashSet<string> result = new HashSet<string>();
 
-            foreach (var number in fisrtArray)
+            foreach (var symbol in fisrtArray)
             {
-                result.Add(number);
+                result.Add(symbol);
             }
 
-            foreach (var number in secondArray)
+            foreach (var symbol in secondArray)
             {
-                result.Add(number);
+                result.Add(symbol);
             }
 
             return result;
@@ -35,9 +35,9 @@ namespace ConsoleApp10
 
         static void PrintCollection(HashSet<string> collection)
         {
-            foreach (var item in collection)
+            foreach (var symbol in collection)
             {
-                Console.WriteLine(item);
+                Console.WriteLine(symbol);
             }
         }
     }
