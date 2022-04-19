@@ -18,14 +18,14 @@ namespace ConsoleApp10
         {
             HashSet<string> result = new HashSet<string>();
 
-            foreach (var item in fisrtArray)
+            foreach (var number in fisrtArray)
             {
-                result.Add(item);
+                result.Add(number);
             }
 
-            foreach (var item in secondArray)
+            foreach (var number in secondArray)
             {
-                result.Add(item);
+                result.Add(number);
             }
 
             return result;
