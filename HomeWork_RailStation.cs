@@ -3,13 +3,6 @@ using System.Collections.Generic;
 
 namespace ConsoleApp8
 {
-    //У вас есть программа, которая помогает пользователю составить план поезда.
-    //Есть 4 основных шага в создании плана:
-    //-Создать направление - создает направление для поезда(к примеру Бийск - Барнаул)
-    //-Продать билеты - вы получаете рандомное кол-во пассажиров, которые купили билеты на это направление
-    //-Сформировать поезд - вы создаете поезд и добавляете ему столько вагонов(вагоны могут быть разные по вместительности), сколько хватит для перевозки всех пассажиров.
-    //-Отправить поезд - вы отправляете поезд, после чего можете снова создать направление.
-    //В верхней части программы должна выводиться полная информация о текущем рейсе или его отсутствии.
     class Program
     {
         static void Main(string[] args)
@@ -58,6 +51,7 @@ namespace ConsoleApp8
 
         public string Name { get; }
         public int CountOfPeople { get; }
+
 
         static Direction()
         {
@@ -158,21 +152,31 @@ namespace ConsoleApp8
         private Train _train;
         private Direction _direction;
         private List<Train> _trains;
+        private bool __changeableStatus;
 
         public Builder()
         {
+            __changeableStatus = true;
             _trains = new List<Train>();
         }
 
         public void CreateDirection()
         {
-            string direction;
+            if (__changeableStatus!=false)
+            {
+                string direction;
 
-            Console.Write("Введите название направления: ");
-            direction = Console.ReadLine();
+                Console.Write("Введите название направления: ");
+                direction = Console.ReadLine();
 
-            _direction = new Direction(direction);
-            Console.WriteLine($"На направление {direction} продано {_direction.CountOfPeople} билетов");
+                _direction = new Direction(direction);
+                Console.WriteLine($"На направление {direction} продано {_direction.CountOfPeople} билетов");
+                __changeableStatus = false;
+            }
+            else
+            {
+                Console.WriteLine("Работа с текущим направлением не завершена");
+            }
         }
 
         public void CreateTrain()
@@ -194,6 +198,7 @@ namespace ConsoleApp8
             if (_train!=null)
             {
                 _train.StratTravel();
+                __changeableStatus = true;
             }
             else
             {
