@@ -10,9 +10,9 @@ namespace ConsoleApp11
             string sourceString = "Показать выходные данные";
             string[] stringArary = sourceString.Split(seporator);
 
-            foreach (var item in stringArary)
+            foreach (var word in stringArary)
             {
-                Console.WriteLine(item);
+                Console.WriteLine(word);
             }
         }
     }
