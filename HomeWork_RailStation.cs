@@ -3,13 +3,6 @@ using System.Collections.Generic;
 
 namespace ConsoleApp8
 {
-    //У вас есть программа, которая помогает пользователю составить план поезда.
-    //Есть 4 основных шага в создании плана:
-    //-Создать направление - создает направление для поезда(к примеру Бийск - Барнаул)
-    //-Продать билеты - вы получаете рандомное кол-во пассажиров, которые купили билеты на это направление
-    //-Сформировать поезд - вы создаете поезд и добавляете ему столько вагонов(вагоны могут быть разные по вместительности), сколько хватит для перевозки всех пассажиров.
-    //-Отправить поезд - вы отправляете поезд, после чего можете снова создать направление.
-    //В верхней части программы должна выводиться полная информация о текущем рейсе или его отсутствии.
     class Program
     {
         static void Main(string[] args)
@@ -54,6 +47,9 @@ namespace ConsoleApp8
 
     class Direction
     {
+        private const int MinCountOfPeople = 25;
+        private const int MaxCountOfPeople = 200;
+
         private static Random _random;
 
         public string Name { get; }
@@ -68,12 +64,15 @@ namespace ConsoleApp8
         public Direction(string name)
         {
             Name = name;
-            CountOfPeople = _random.Next(25, 200);
+            CountOfPeople = _random.Next(MinCountOfPeople, MaxCountOfPeople);
         }
     }
 
     public class Vagon
     {
+        private const int MinCountOfPlaces = 10;
+        private const int MaxCountOfPlaces = 33;
+
         private static Random _random;
 
         public int Capacity { get; }
@@ -85,7 +84,7 @@ namespace ConsoleApp8
 
         public Vagon()
         {
-            Capacity = _random.Next(10, 33);
+            Capacity = _random.Next(MinCountOfPlaces, MaxCountOfPlaces);
         }
     }
 
@@ -159,17 +158,17 @@ namespace ConsoleApp8
         private Train _train;
         private Direction _direction;
         private List<Train> _trains;
-        private bool __changeableStatus;
+        private bool _changeableStatus;
 
         public Builder()
         {
-            __changeableStatus = true;
+            _changeableStatus = true;
             _trains = new List<Train>();
         }
 
         public void CreateDirection()
         {
-            if (__changeableStatus!=false)
+            if (_changeableStatus!=false)
             {
                 string direction;
 
@@ -178,7 +177,7 @@ namespace ConsoleApp8
 
                 _direction = new Direction(direction);
                 Console.WriteLine($"На направление {direction} продано {_direction.CountOfPeople} билетов");
-                __changeableStatus = false;
+                _changeableStatus = false;
             }
             else
             {
@@ -205,7 +204,7 @@ namespace ConsoleApp8
             if (_train!=null)
             {
                 _train.StratTravel();
-                __changeableStatus = true;
+                _changeableStatus = true;
             }
             else
             {
