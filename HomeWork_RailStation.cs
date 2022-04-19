@@ -17,30 +17,27 @@ namespace ConsoleApp8
             ConsoleKey userOption;
             bool isActive = true;
             Builder builder = new Builder();
-            List<Builder> table = new List<Builder>();
 
             while (isActive)
             {
-
-                PrintTable(table);
+                builder.ShowInfo();
 
                 PrintMenu();
 
-                Console.Write("Введите опцию: ");
+                Console.Write("\nВведите опцию: ");
                 userOption = Console.ReadKey().Key;
 
-
+                Console.Clear();
                 switch (userOption)
                 {
                     case ConsoleKey.D1:
-
                         builder.CreateDirection();
                         break;
                     case ConsoleKey.D2:
                         builder.CreateTrain();
                         break;
                     case ConsoleKey.D3:
-                        table.Add(builder);
+                        builder.StratTravel();
                         break;
                     case ConsoleKey.D4:
                         isActive = false;
@@ -51,15 +48,7 @@ namespace ConsoleApp8
 
         static void PrintMenu()
         {
-            Console.WriteLine("1 - Создать направление\n2 - Сформировать поезд\n3 - Отправить поезд\n4 - Выход");
-        }
-
-        static void PrintTable(List<Builder> tables)
-        {
-            foreach (var table in tables)
-            {
-                table.ShowInfo();
-            }
+            Console.WriteLine("\n\n\n1 - Создать направление\n2 - Сформировать поезд\n3 - Отправить поезд\n4 - Выход");
         }
     }
 
@@ -101,11 +90,26 @@ namespace ConsoleApp8
 
     class Train
     {
+        private bool _status;
         private Direction _direction;
         private List<Vagon> _vagons;
 
+        public bool Status => _status;
+        public string StringStatus
+        {
+            get
+            {
+                if (_status != true)
+                {
+                    return "В депо";
+                }
+                else
+                {
+                    return "В пути";
+                }
+            }
+        }
         public int CountOfVagons { get { return _vagons.Count; } }
-
         public int CountOfPlacements
         {
             get
@@ -137,14 +141,28 @@ namespace ConsoleApp8
                 countOfPassangers -= _vagons[i].Capacity;
             }
         }
+
+        public void StratTravel()
+        {
+            _status = true;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Направление - {_direction.Name} | Количество вагонов - {CountOfVagons} | Количество мест - {CountOfPlacements} | Количетсво пассажиров - {_direction.CountOfPeople} | Статус - {StringStatus}");
+        }
     }
 
     class Builder
     {
         private Train _train;
         private Direction _direction;
+        private List<Train> _trains;
 
-        public int CountOfVagons { get { return _train.CountOfVagons; } }
+        public Builder()
+        {
+            _trains = new List<Train>();
+        }
 
         public void CreateDirection()
         {
@@ -159,13 +177,36 @@ namespace ConsoleApp8
 
         public void CreateTrain()
         {
-            _train = new Train(_direction);
-            _train.CreateVagons();
+            if (_direction != null)
+            {
+                _train = new Train(_direction);
+                _trains.Add(_train);
+                _train.CreateVagons();
+            }
+            else
+            {
+                Console.WriteLine("Направление еще не создано!");
+            }
+        }
+
+        public void StratTravel()
+        {
+            if (_train!=null)
+            {
+                _train.StratTravel();
+            }
+            else
+            {
+                Console.WriteLine("Поезд еще не создан!");
+            }
         }
 
         public void ShowInfo()
         {
-            Console.WriteLine($"Направление - {_direction.Name} | Количество вагонов - {_train.CountOfVagons} | Количество мест - {_train.CountOfPlacements} | Количетсво пассажиров - {_direction.CountOfPeople}");
+            foreach (var train in _trains)
+            {
+                train.ShowInfo();
+            }
         }
     }
 }
