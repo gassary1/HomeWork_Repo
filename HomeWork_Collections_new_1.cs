@@ -18,14 +18,12 @@ namespace ConsoleApp10
 
         static HashSet<string> UnionToCollection(string[] fisrtArray, string[] secondArray)
         {
+            List<string> unionList = new List<string>(fisrtArray);
             HashSet<string> result = new HashSet<string>();
 
-            foreach (var symbol in fisrtArray)
-            {
-                result.Add(symbol);
-            }
+            unionList.AddRange(secondArray);
 
-            foreach (var symbol in secondArray)
+            foreach (var symbol in unionList)
             {
                 result.Add(symbol);
             }
@@ -35,9 +33,9 @@ namespace ConsoleApp10
 
         static void PrintCollection(HashSet<string> collection)
         {
-            foreach (var symbol in collection)
+            foreach (var item in collection)
             {
-                Console.WriteLine(symbol);
+                Console.WriteLine(item);
             }
         }
     }
