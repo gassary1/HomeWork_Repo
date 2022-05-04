@@ -18,17 +18,31 @@ namespace ConsoleApp16
             bool fireballFlag = false;
             Random random = new Random();
 
+            int minRandomValue = 0;
+            float minHealth = 0;
+            float maxHealth = 100;
+            int minRandomHealth = 90;
+            int maxRandomHealth = 101;
+            int minPlayerDamage = 5;
+            int maxPlayerDamage = 25;
+            int minPlayerArmor = 25;
+            int maxPlayerArmor = 35;
+            int minBossDamage = 20;
+            int maxBossDamage = 35;
+            int minBossArmor = 35;
+            int maxBossArmor = 45;
+
             string playerName = "Sif";
-            float playerHealth = random.Next(90, 101);
-            int playerDamage = random.Next(5, 25);
-            int playerArmor = random.Next(25, 35);
+            float playerHealth = random.Next(minRandomHealth, maxRandomHealth);
+            int playerDamage = random.Next(minPlayerDamage, maxPlayerDamage);
+            int playerArmor = random.Next(minPlayerArmor, maxPlayerArmor);
 
             string bossName = "Nito";
-            float bossHealth = random.Next(95, 101);
-            int bossDamage = random.Next(20, 35);
-            int bossArmor = random.Next(35, 45);
+            float bossHealth = random.Next(minRandomHealth, maxRandomHealth);
+            int bossDamage = random.Next(minBossDamage, maxBossDamage);
+            int bossArmor = random.Next(minBossArmor, maxBossArmor);
 
-            while (playerHealth > 0 && bossHealth > 0)
+            while (playerHealth > minHealth && bossHealth > minHealth)
             {
                 Console.WriteLine($"Имя игрока: {playerName} | Здоровье: {playerHealth} | Наносимый урон: {playerDamage} | Броня: {playerArmor}");
                 Console.WriteLine($"Имя босса: {bossName} | Здоровье: {bossHealth} | Наносимый урон: {bossDamage} | Броня: {bossArmor}");
@@ -41,7 +55,7 @@ namespace ConsoleApp16
 
                 if (userInput == ConsoleKey.D1)
                 {
-                    playerHealth -= Convert.ToSingle(random.Next(0, bossDamage)) / percent * playerArmor;
+                    playerHealth -= Convert.ToSingle(random.Next(minRandomValue, bossDamage)) / percent * playerArmor;
                     bossHealth -= DoFireball() / percent * bossArmor;
 
                     Console.BackgroundColor = ConsoleColor.Green;
@@ -55,7 +69,7 @@ namespace ConsoleApp16
                 {
                     if (fireballFlag == true)
                     {
-                        playerHealth -= Convert.ToSingle(random.Next(0, bossDamage)) / percent * playerArmor;
+                        playerHealth -= Convert.ToSingle(random.Next(minRandomValue, bossDamage)) / percent * playerArmor;
                         bossHealth -= DoFireJail() / percent * bossArmor;
                         fireballFlag = false;
                     }
@@ -66,23 +80,23 @@ namespace ConsoleApp16
                         Console.WriteLine("Заклинание не прошло!");
                         Console.ResetColor();
 
-                        playerHealth -= Convert.ToSingle(random.Next(0, bossDamage)) / percent * playerArmor;
+                        playerHealth -= Convert.ToSingle(random.Next(minRandomValue, bossDamage)) / percent * playerArmor;
                     }
                 }
                 else if (userInput == ConsoleKey.D3)
                 {
                     DoAshenCloud();
-                    bossHealth -= Convert.ToSingle(random.Next(0, playerDamage)) / percent * bossArmor;
+                    bossHealth -= Convert.ToSingle(random.Next(minRandomValue, playerDamage)) / percent * bossArmor;
                 }
                 else if (userInput == ConsoleKey.D4)
                 {
-                    if (playerHealth < 100)
+                    if (playerHealth < maxHealth)
                     {
                         playerHealth += DoEstuss();
 
-                        if (playerHealth > 100)
+                        if (playerHealth > maxHealth)
                         {
-                            playerHealth = 100;
+                            playerHealth = maxHealth;
                         }
 
                         Console.BackgroundColor = ConsoleColor.Green;
@@ -100,16 +114,16 @@ namespace ConsoleApp16
                 }
                 else
                 {
-                    playerHealth -= Convert.ToSingle(random.Next(0, bossDamage)) / percent * playerArmor;
-                    bossHealth -= Convert.ToSingle(random.Next(0, playerDamage)) / percent * bossArmor;
+                    playerHealth -= Convert.ToSingle(random.Next(minRandomValue, bossDamage)) / percent * playerArmor;
+                    bossHealth -= Convert.ToSingle(random.Next(minRandomValue, playerDamage)) / percent * bossArmor;
                 }
             }
 
-            if (playerHealth == 0 && bossHealth == 0)
+            if (playerHealth == minHealth && bossHealth == minHealth)
             {
                 Console.WriteLine("Ничья");
             }
-            else if (playerHealth <= 0)
+            else if (playerHealth <= minHealth)
             {
                 Console.WriteLine($"{bossName} одержал победу");
             }
