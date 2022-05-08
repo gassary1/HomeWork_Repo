@@ -10,20 +10,21 @@ namespace ConsoleApp18
             int tempNumber;
             uint step;
             int[] numbers = { 1, 2, 3, 4, 5, 6 };
+            int lastNumber = numbers.Length - 1;
 
             Console.WriteLine("Введите число, на которое нужно сдвинуть массив: ");
             step = GetNumber();
 
             for (int i = 0; i < step; i++)
             {
-                tempNumber = numbers[numbers.Length - 1];
+                tempNumber = numbers[0];
 
-                for (int j = numbers.Length - 1; j > 0; j--)
+                for (int j = 0; j < lastNumber; j++)
                 {
-                    numbers[j] = numbers[j - 1];
+                    numbers[j] = numbers[j + 1];
                 }
 
-                numbers[0] = tempNumber;
+                numbers[lastNumber] = tempNumber;
             }
 
             foreach (var number in numbers)
