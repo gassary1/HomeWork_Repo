@@ -11,29 +11,33 @@ namespace ConsoleApp19
     {
         static void Main(string[] args)
         {
-            Random random = new Random();
-            List<string> clientsList = new List<string>() { "Олег", "Алексей", "Александр" };
-            int[] price = { 50, 100, 40, 150, 60, 110, 200, 10, 20 };
-            Queue<string> clients = new Queue<string>(clientsList);
+            int position = 1;
             int cost = 0;
             int billOfClient;
 
-            while (clients.Count > 0)
-            {
-                Console.WriteLine($"Очередь клиента - {clients.Dequeue()}");
+            Queue<int> price = new Queue<int>();
+            price.Enqueue(50);
+            price.Enqueue(100);
+            price.Enqueue(40);
+            price.Enqueue(150);
 
-                billOfClient = price[random.Next(price.Length)];
+            while (price.Count > 0)
+            {
+                Console.WriteLine($"Очередь клиента - {position}");
+
+                billOfClient = price.Dequeue();
 
                 Console.WriteLine($"Сумма покупки равна - {billOfClient}");
 
                 cost += billOfClient;
+                position++;
 
                 Console.ReadLine();
 
                 Console.Clear();
             }
 
-            if (clients.Count == 0)
+            if (price.Count == 0)
             {
                 Console.WriteLine("Клиентов больше нет!");
             }
