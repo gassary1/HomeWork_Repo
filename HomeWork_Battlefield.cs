@@ -15,6 +15,7 @@ namespace ConsoleApp4
         {
             Squad firstSquad = new Squad("Отряд Гамма");
             Squad seconSquad = new Squad("Отряд Дельта");
+
             Battlefield poligon = new Battlefield(firstSquad, seconSquad);
 
             ShowSquads(firstSquad, seconSquad);
@@ -40,7 +41,7 @@ namespace ConsoleApp4
 
     abstract class Warrior
     {
-        private static List<string> _dbNames;
+        private static List<string> _dataBaseOfNames;
 
         private int _health;
         private string _name;
@@ -48,12 +49,12 @@ namespace ConsoleApp4
 
         static Warrior()
         {
-            _dbNames = new List<string>();
+            _dataBaseOfNames = new List<string>();
         }
 
         public Warrior(string name, int health, int damage)
         {
-            if (name == string.Empty || Warrior._dbNames.Contains(name))
+            if (name == string.Empty || Warrior._dataBaseOfNames.Contains(name))
             {
                 name = $"{Guid.NewGuid().ToString().Substring(0, 5)}";
             }
@@ -61,7 +62,7 @@ namespace ConsoleApp4
             _health = health;
             _damage = damage;
 
-            _dbNames.Add(name);
+            _dataBaseOfNames.Add(name);
         }
 
         public void Attack(Warrior target)
@@ -115,7 +116,7 @@ namespace ConsoleApp4
 
         public Stormtrooper(string name) : base(name, 90, 10)
         {
-            
+
         }
         public Stormtrooper() : this("")
         {
@@ -124,7 +125,9 @@ namespace ConsoleApp4
 
         protected override int DamageEffect(int damage)
         {
-            return damage - Armor*damage/100;
+            int percent = 100;
+
+            return damage - Armor * damage / percent;
         }
     }
 
