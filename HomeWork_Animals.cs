@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace ConsoleApp11
+namespace ConsoleApp5
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Volier v1 = new Volier();
-            Volier v2 = new Volier();
+            Aviary v1 = new Aviary("fsdf");
+            Aviary v2 = new Aviary("xcvxc");
 
             v1.ShowInfo();
             Console.WriteLine();
@@ -20,9 +20,9 @@ namespace ConsoleApp11
     {
         public abstract void Moto();
 
-        public void ShowAnimalInfo()
+        public string ShowAnimalInfo()
         {
-            Console.WriteLine(GetType().Name);
+            return GetType().Name;
         }
     }
 
@@ -91,25 +91,28 @@ namespace ConsoleApp11
         }
     }
 
-    class Volier
+    class Aviary
     {
-        private List<Animal> _animals;
         private static Random _random;
+        private List<Animal> _animals;
+        
+        public string Name { get; }
 
-        static Volier()
+        static Aviary()
         {
             _random = new Random();
         }
 
-        public Volier()
+        public Aviary(string name)
         {
+            Name = name;
             _animals = new List<Animal>();
             CreateAnimals();
         }
 
         private void CreateAnimals()
         {
-            for (int i = 0; i < _random.Next(1,11); i++)
+            for (int i = 0; i < _random.Next(1, 11); i++)
             {
                 switch (_random.Next(1, 6))
                 {
@@ -134,10 +137,11 @@ namespace ConsoleApp11
 
         public void ShowInfo()
         {
-            Console.WriteLine("Вольер");
+            Console.WriteLine($"Вольер - {Name}");
+
             foreach (var animal in _animals)
             {
-                animal.ShowAnimalInfo();
+                Console.WriteLine($"{animal.ShowAnimalInfo()}");
             }
         }
     }
