@@ -97,6 +97,7 @@ namespace ConsoleApp5
         private List<Animal> _animals;
         
         public string Name { get; }
+        public int CountOfAnimals { get { return _animals.Count; } }
 
         static Aviary()
         {
