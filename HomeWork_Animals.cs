@@ -15,20 +15,11 @@ namespace ConsoleApp5
             int currentPosition;
             Aviary currentAviary = null;
 
-            List<Aviary> aviaries = new List<Aviary>()
-            {
-                new Aviary("Вольер 1"),
-                new Aviary("Вольер 2"),
-                new Aviary("Вольер 3"),
-                new Aviary("Вольер 4"),
-                new Aviary("Вольер 5"),
-                new Aviary("Вольер 6"),
-                new Aviary("Вольер 7"),
-            };
+            Zoo zoo = new Zoo();
 
             while (isActive)
             {
-                ShowListOfAviaries(aviaries);
+                zoo.ShowListOfAviaries();
 
                 Console.Write("\nВведите номер вольера (наберите exit, чтобы выйти): ");
                 userInput = Console.ReadLine();
@@ -37,7 +28,7 @@ namespace ConsoleApp5
 
                 if (int.TryParse(userInput, out currentPosition))
                 {
-                    if (currentPosition > 0 && currentPosition<=aviaries.Count && TryGetAviary(currentPosition, aviaries, out currentAviary))
+                    if (zoo.TryGetAviary(currentPosition, out currentAviary))
                     {
                         currentAviary.ShowAviaryInfo();
                     }
@@ -69,16 +60,6 @@ namespace ConsoleApp5
 
             aviary = aviaries[aviaryPosition];
             return true;
-        }
-
-        static void ShowListOfAviaries(List<Aviary> aviaries)
-        {
-            Console.WriteLine("Список вольеров");
-
-            foreach (Aviary aviary in aviaries)
-            {
-                Console.WriteLine(aviary.Name);
-            }
         }
     }
 
@@ -228,6 +209,59 @@ namespace ConsoleApp5
                         _animals.Add(new Tiger());
                         break;
                 }
+            }
+        }
+    }
+
+    class Zoo
+    {
+        const int MinCountOfAnimals = 3;
+        const int MaxCountOfAnimals = 7;
+
+        private static Random _random;
+        private List<Aviary> _aviaries;
+
+        static Zoo()
+        {
+            _random = new Random();
+        }
+
+        public Zoo()
+        {
+            _aviaries = new List<Aviary>();
+
+            CreateAviaries();
+        }
+
+        public bool TryGetAviary(int currentPosition, out Aviary aviary)
+        {
+            int aviaryPosition = currentPosition - 1;
+            aviary = null;
+
+            if (currentPosition < 0 || currentPosition > _aviaries.Count|| _aviaries[aviaryPosition] == null)
+            {
+                return false;
+            }
+
+            aviary = _aviaries[aviaryPosition];
+            return true;
+        }
+
+        public void ShowListOfAviaries()
+        {
+            Console.WriteLine("Список вольеров");
+
+            foreach (Aviary aviary in _aviaries)
+            {
+                Console.WriteLine(aviary.Name);
+            }
+        }
+
+        private void CreateAviaries()
+        {
+            for (int i = 0; i < _random.Next(MinCountOfAnimals, MaxCountOfAnimals); i++)
+            {
+                _aviaries.Add(new Aviary($"Вольер - {i + 1}"));
             }
         }
     }
