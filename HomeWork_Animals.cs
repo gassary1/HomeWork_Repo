@@ -259,9 +259,9 @@ namespace ConsoleApp5
 
         private void CreateAviaries()
         {
-            for (int i = 0; i < _random.Next(MinCountOfAnimals, MaxCountOfAnimals); i++)
+            for (int i = 1; i <= _random.Next(MinCountOfAnimals, MaxCountOfAnimals); i++)
             {
-                _aviaries.Add(new Aviary($"Вольер - {i + 1}"));
+                _aviaries.Add(new Aviary($"Вольер - {i}"));
             }
         }
     }
