@@ -47,26 +47,12 @@ namespace ConsoleApp5
                 }
             }
         }
-
-        static bool TryGetAviary(int currentPosition, List<Aviary> aviaries, out Aviary aviary)
-        {
-            int aviaryPosition = currentPosition - 1;
-            aviary = null;
-
-            if (aviaries[aviaryPosition] == null)
-            {
-                return false;
-            }
-
-            aviary = aviaries[aviaryPosition];
-            return true;
-        }
     }
 
     abstract class Animal
     {
-        const byte MinAge = 1;
-        const byte MaxAge = 20;
+        private const byte MinAge = 1;
+        private const byte MaxAge = 20;
 
         private static Random _random;
         private byte _age;
@@ -148,8 +134,8 @@ namespace ConsoleApp5
 
     class Aviary
     {
-        const int MinCountOfAnimals = 2;
-        const int MaxCountOfAnimals = 9;
+        private const int MinCountOfAnimals = 2;
+        private const int MaxCountOfAnimals = 9;
 
         private static Random _random;
         private List<Animal> _animals;
@@ -215,8 +201,8 @@ namespace ConsoleApp5
 
     class Zoo
     {
-        const int MinCountOfAnimals = 3;
-        const int MaxCountOfAnimals = 7;
+        private const int MinCountOfAnimals = 3;
+        private const int MaxCountOfAnimals = 7;
 
         private static Random _random;
         private List<Aviary> _aviaries;
