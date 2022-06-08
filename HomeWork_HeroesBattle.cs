@@ -22,7 +22,9 @@ namespace ConsoleApp9
             };
 
             Arena arena = new Arena(heroes);
+
             arena.SelectHeroes();
+            arena.ShowBattleResult();
         }
     }
 
@@ -147,11 +149,13 @@ namespace ConsoleApp9
 
         protected override void UseAbility(Hero target)
         {
+            int specialDamage = 0;
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{Name} - применил ДРАКОНЬЯ КОЖА");
             Console.ResetColor();
 
-            _armor = 60;
+            DamageEffect(specialDamage);
         }
     }
 
@@ -290,7 +294,23 @@ namespace ConsoleApp9
             _firstHero = _heroes[TrySelectHero() - 1];
             _secondHero = _heroes[TrySelectHero() - 1];
 
-            StartFight();
+            Fight();
+        }
+
+        public void ShowBattleResult()
+        {
+            if (_firstHero.Health < 0)
+            {
+                Console.WriteLine($"{_secondHero.Name} победил");
+            }
+            else if (_firstHero.Health < 0 && _secondHero.Health < 0)
+            {
+                Console.WriteLine("Ничья");
+            }
+            else
+            {
+                Console.WriteLine($"{_secondHero.Name} победил");
+            }
         }
 
         private int TrySelectHero()
@@ -317,7 +337,7 @@ namespace ConsoleApp9
             return 0;
         }
 
-        private void StartFight()
+        private void Fight()
         {
             _firstHero.ShowInfo();
             _secondHero.ShowInfo();
@@ -337,19 +357,6 @@ namespace ConsoleApp9
 
             Console.WriteLine("#############");
             Console.WriteLine("Бой окончен");
-
-            if (_firstHero.Health < 0)
-            {
-                Console.WriteLine($"{_secondHero.Name} победил");
-            }
-            else if (_firstHero.Health < 0 && _secondHero.Health < 0)
-            {
-                Console.WriteLine("Ничья");
-            }
-            else
-            {
-                Console.WriteLine($"{_secondHero.Name} победил");
-            }
         }
 
         private void ShowHeroes()
